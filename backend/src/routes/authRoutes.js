@@ -12,4 +12,7 @@ authRouter.post(
   registerController,
 );
 
+
+authRouter.post("/login",)
+
 export default authRouter;
