@@ -73,7 +73,7 @@ export const createProcessOffer = ({
     );
   }
 
-  // ACCEPT ZONE
+  // ACCEPT offer
   else {
     action = "accept";
     aiResponse = await aiResponder({

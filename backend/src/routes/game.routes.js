@@ -8,6 +8,7 @@ import {authMiddleware} from "../middleware/auth.middleware.js";
 
 const gameRouter = Router();
 
+
 //**
 // @routes POST /api/games/
 // @desc Start a new game
@@ -15,11 +16,13 @@ const gameRouter = Router();
 // */
 gameRouter.post("/", authMiddleware, createGameController);
 
+
 //** @routes POST /api/games/:gameId/offer
 // @desc Make an offer in an ongoing game
 // @input { offer }
 // */
 gameRouter.post("/:gameId/offer", authMiddleware, makeOfferController);
+
 
 //** @routes GET /api/games/:gameId
 // @desc Get current game state
