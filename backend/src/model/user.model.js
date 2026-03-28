@@ -6,15 +6,18 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "User name is required"],
       unique: [true, "User name must be unique"],
+      trim: true,
     },
     email: {
       type: String,
       required: [true, "Email is required"],
       unique: [true, "Email must be unique"],
+      trim: true,
     },
     password: {
       type: String,
       required: [true, "Password is required"],
+      minlength: [6, "Password must be at least 6 characters long"],
     },
     bestScore: {
       type: Number,
