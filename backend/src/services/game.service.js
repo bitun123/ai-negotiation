@@ -1,66 +1,126 @@
 import getAIResponse from "./ai.service.js";
 import gameModel from "../model/game.model.js";
+import { formatHistory } from "../utils/formatHistory.js";
 
-export const processOffer = async (gameId, gameId) => {
-  try {
-    const game = await gameModel.findById(gameId);
+export const createProcessOffer = ({
+  model = gameModel,
+  aiResponder = getAIResponse,
+  historyFormatter = formatHistory,
+} = {}) => async (gameId, offer) => {
+  const normalizedOffer = Number(offer);
+  if (!Number.isFinite(normalizedOffer) || normalizedOffer < 0) {
+    throw new Error("Invalid offer");
+  }
 
-    if (!game) {
-      throw new Error("Game not found");
-    }
-    if (game.status === "completed") throw new Error("Game already completed");
+  const game = await model.findById(gameId);
+  if (!game) throw new Error("Game not found");
+  if (game.status === "completed") throw new Error("Game completed");
 
-    const currentRound = game.rounds.length + 1;
+  const currentRound = game.rounds.length + 1;
+  if (currentRound > game.maxRounds) throw new Error("Max rounds reached");
 
-    if (currentRound > game.maxRounds) {
-      throw new Error("Max rounds reached");
-    }
+  const { minPrice, initialPrice, difficulty, aiPersonality } = game;
+  const targetPrice = Math.round(initialPrice * 0.85);
 
-    let aiResponse = "";
-    let aiCounter = null;
+  const history = historyFormatter(game.rounds.slice(-3));
+  const lastCounter = game.rounds.at(-1)?.aiCounter || initialPrice;
 
-    // 🧠 CASE 1: Offer BELOW min price → AI handles tone, NOT decision
+  let baseDrop = difficulty === "easy" ? 80 : difficulty === "hard" ? 30 : 50;
+  if (aiPersonality === "greedy") baseDrop -= 10;
+  if (aiPersonality === "friendly") baseDrop += 10;
 
-    if (offer < game.minPrice) {
-      aiResponse = await getAIResponse({
-        offer,
-        minPrice: game.minPrice,
-        initialPrice: game.initialPrice,
-        currentRound,
-        maxRounds: game.maxRounds,
-      });
-      aiCounter = Math.max(
-        game.minPrice,
-        game.initialPrice - currentRound * 50,
-      );
-    }
-    // 🧠 CASE 2: Offer >= min price → ACCEPT (AI cannot override)
-    else {
-      aiResponse = "Alright, deal accepted!";
-      game.finalPrice = offer;
-      game.status = "completed";
-    }
+  let aiResponse = "";
+  let aiCounter = null;
+  let action = "negotiate";
 
-    // ⏱️ CASE 3: Last round and still not accepted
-
-    if (currentRound === game.maxRounds && aiCounter !== null) {
-      aiResponse += " This is my final offer.";
-      aiResponse = "Negotiation ended. No deal.";
-      game.status = "completed";
-    }
-
-    game.rounds.push({
-      round: currentRound,
-      userOffer: offer,
-      aiResponse,
-      aiCounter,
+  // BELOW MIN
+  if (normalizedOffer < minPrice) {
+    action = "reject";
+    aiResponse = await aiResponder({
+      offer: normalizedOffer,
+      minPrice,
+      initialPrice,
+      currentRound,
+      maxRounds: game.maxRounds,
+      difficulty,
+      aiPersonality,
+      history,
+      action,
     });
 
-    await game.save();
-
-    return game;
-  } catch (error) {
-    console.error("Game Service Error:", error.message);
-    throw new Error("Failed to process offer");
+    aiCounter = Math.max(minPrice, lastCounter - baseDrop);
   }
+
+  // NEGOTIATE
+  else if (normalizedOffer < targetPrice) {
+    action = "negotiate";
+    aiResponse = await aiResponder({
+      offer: normalizedOffer,
+      minPrice,
+      initialPrice,
+      currentRound,
+      maxRounds: game.maxRounds,
+      difficulty,
+      aiPersonality,
+      history,
+      action,
+    });
+
+    aiCounter = Math.max(
+      normalizedOffer + 20,
+      Math.round(normalizedOffer + (initialPrice - normalizedOffer) * 0.4),
+      minPrice
+    );
+  }
+
+  // ACCEPT ZONE
+  else {
+    action = "accept";
+    aiResponse = await aiResponder({
+      offer: normalizedOffer,
+      minPrice,
+      initialPrice,
+      currentRound,
+      maxRounds: game.maxRounds,
+      difficulty,
+      aiPersonality,
+      history,
+      action,
+    });
+
+    if (difficulty === "hard" && currentRound < game.maxRounds - 1) {
+      action = "negotiate";
+      aiCounter = Math.max(minPrice, Math.round(normalizedOffer * 1.05));
+    } else {
+      game.finalPrice = normalizedOffer;
+      game.status = "completed";
+    }
+  }
+
+  // LAST ROUND
+  if (currentRound === game.maxRounds && game.status !== "completed") {
+    if (normalizedOffer >= minPrice) {
+      game.finalPrice = normalizedOffer;
+      action = "accept";
+      aiResponse = `Fine, deal done at ${normalizedOffer}.`;
+    } else {
+      action = "reject";
+      aiResponse = "No deal.";
+    }
+    game.status = "completed";
+    aiCounter = null;
+  }
+
+  game.rounds.push({
+    round: currentRound,
+    userOffer: normalizedOffer,
+    aiResponse,
+    aiCounter
+  });
+
+  await game.save();
+  return game;
 };
+
+export const processOffer = createProcessOffer();
+
