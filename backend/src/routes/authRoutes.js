@@ -6,7 +6,7 @@ import { validateRequest } from "../middleware/validation.middleware.js";
 const authRouter = Router();
 
 authRouter.post(
-  "/register",
+  "/registration",
   registerValidator,
   validateRequest,
   registerController,

@@ -14,11 +14,11 @@ export const registerController = async (req, res) => {
     // If user exists, return an error response
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
-    }
+    }  
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = new userModel.create({
+    const newUser = await userModel.create({
       userName,
       email,
       password: hashedPassword,
