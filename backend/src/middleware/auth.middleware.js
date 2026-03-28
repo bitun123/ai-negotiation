@@ -1,0 +1,26 @@
+import userModel from "../model/user.model.js";
+import jwt from "jsonwebtoken";
+
+export const authMiddleware = async (req, res, next) => {
+  try {
+    const token = req.cookies.token;
+
+    if (!token) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    let decode = null;
+    try {
+      decode = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = decode;
+      next();
+    } catch (error) {
+      return res.status(401).json({ message: "Invalid token" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
+
