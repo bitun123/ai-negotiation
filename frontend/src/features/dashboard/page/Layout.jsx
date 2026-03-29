@@ -2,53 +2,86 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function Layout() {
-
-
     return (
-        <main className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
+        <main className="relative min-h-screen overflow-hidden bg-[#040817] text-slate-100">
             <div className="pointer-events-none absolute inset-0">
-                <div className="absolute -top-40 left-1/2 h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl" />
-                <div className="absolute -bottom-56 right-[-8rem] h-[28rem] w-[28rem] rounded-full bg-indigo-500/15 blur-3xl" />
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.14),_transparent_44%)]" />
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(56,81,168,0.13)_1px,transparent_1px),linear-gradient(90deg,rgba(56,81,168,0.13)_1px,transparent_1px)] bg-[size:42px_42px]" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(15,23,42,0)_0%,rgba(2,6,23,0.6)_64%,rgba(2,6,23,0.92)_100%)]" />
             </div>
 
-            <section className="relative mx-auto flex min-h-screen w-full max-w-4xl items-center justify-center px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
-                <div className="w-full rounded-2xl border border-slate-700/70 bg-slate-900/75 p-4 shadow-[0_0_0_1px_rgba(148,163,184,0.08),0_24px_80px_-28px_rgba(8,47,73,0.95)] backdrop-blur-md sm:rounded-3xl sm:p-6 lg:p-5">
-                    <header className="overflow-hidden rounded-xl border border-cyan-300/20 bg-gradient-to-b from-slate-950 via-slate-900 to-sky-950 px-4 py-8 text-center shadow-inner shadow-sky-900/30 sm:rounded-2xl sm:px-8 sm:py-10 lg:py-12">
-                        <span className="block text-4xl leading-none sm:text-5xl" aria-hidden="true">
-                            💰
-                        </span>
-                        <h1 className="mt-4 font-display text-4xl font-black uppercase tracking-wide text-white sm:text-5xl lg:text-6xl">
-                            Negotiate
-                        </h1>
-                        <p className="mt-4 font-sans text-2xl font-light text-slate-200 sm:text-3xl">
-                            Master the Art of Deal-Making
-                        </p>
-                        <p className="mx-auto mt-4 max-w-2xl font-sans text-base leading-relaxed text-slate-300 sm:text-lg">
-                            Face an AI seller with hidden constraints. Use strategy, timing, and
-                            persuasion to secure the lowest price.
-                        </p>
-                    </header>
+            <section className="relative mx-auto flex min-h-screen w-full max-w-5xl items-center justify-center px-4 py-10 sm:px-8 sm:py-14">
+                <div className="w-full max-w-2xl text-center">
+                    <div className="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.45em] text-indigo-300/70 sm:text-xs">
+                        <span className="h-px w-10 bg-indigo-400/35 sm:w-14" />
+                        Negotiation Arena
+                        <span className="h-px w-10 bg-indigo-400/35 sm:w-14" />
+                    </div>
 
-                    <div className="mt-6 grid gap-4 sm:mt-8 sm:gap-5">
-                        <button
-                            type="button"
-                            className="w-full rounded-xl border border-slate-600/80 bg-slate-900/80 px-4 py-4 font-display text-4xl font-black lowercase tracking-wide text-slate-100 transition duration-200 hover:-translate-y-0.5 hover:border-cyan-400/60 hover:bg-slate-800/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 sm:rounded-2xl sm:py-5 sm:text-5xl"
+                    <h1 className="mt-3 font-display text-7xl uppercase tracking-[0.08em] text-yellow-400 sm:text-8xl lg:text-9xl">
+                        Haggle
+                    </h1>
+
+                    <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-indigo-200/75 sm:text-base">
+                        Face a live AI seller with hidden constraints.
+                        <br className="hidden sm:block" />
+                        Outmaneuver, outwit, and lock in the lowest price.
+                        <br className="hidden sm:block" />
+                        Your score lands on the global leaderboard.
+                    </p>
+
+                    <div className="mx-auto mt-8 flex w-full max-w-sm flex-col gap-3">
+                    <Link
+                            to="/game"
+                            className="w-full rounded-md border border-yellow-300/80 bg-yellow-400 px-6 py-3 font-display text-xl uppercase tracking-[0.25em] text-slate-950 transition hover:bg-yellow-300"
                         >
-                            start game
-                        </button>
-
-                        <Link to="/leaderboard">
-                            <button
-                                type="button"
-                                className="w-full rounded-xl border border-slate-600/80 bg-slate-900/80 px-4 py-4 font-display text-4xl font-black lowercase tracking-wide text-slate-100 transition duration-200 hover:-translate-y-0.5 hover:border-cyan-400/60 hover:bg-slate-800/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 sm:rounded-2xl sm:py-5 sm:text-5xl"
-                            >
-                                view leaderboard
-                            </button>
+                            Start Negotiation
                         </Link>
+                   
+
+                        <Link
+                            to="/leaderboard"
+                            className="w-full rounded-md border border-indigo-600/40 bg-indigo-950/25 px-6 py-2.5 text-center font-display text-sm uppercase tracking-[0.3em] text-indigo-300 transition hover:border-indigo-400/70 hover:text-indigo-200"
+                        >
+                            View Leaderboard
+                        </Link>
+                    </div>
+
+                    <div className="mt-10 border-t border-indigo-500/25 pt-6 sm:mt-12 sm:pt-7">
+                        <div className="grid grid-cols-2 gap-6 sm:grid-cols-4 sm:gap-4">
+                            <div>
+                                <p className="font-display text-3xl text-yellow-400 sm:text-4xl">2,847</p>
+                                <p className="mt-1 text-[10px] uppercase tracking-[0.25em] text-indigo-300/60 sm:text-xs">
+                                    Deals Closed
+                                </p>
+                            </div>
+                            <div>
+                                <p className="font-display text-3xl text-yellow-400 sm:text-4xl">38%</p>
+                                <p className="mt-1 text-[10px] uppercase tracking-[0.25em] text-indigo-300/60 sm:text-xs">
+                                    Avg Discount
+                                </p>
+                            </div>
+                            <div>
+                                <p className="font-display text-3xl text-yellow-400 sm:text-4xl">4</p>
+                                <p className="mt-1 text-[10px] uppercase tracking-[0.25em] text-indigo-300/60 sm:text-xs">
+                                    Products
+                                </p>
+                            </div>
+                            <div>
+                                <p className="font-display text-3xl text-yellow-400 sm:text-4xl">7</p>
+                                <p className="mt-1 text-[10px] uppercase tracking-[0.25em] text-indigo-300/60 sm:text-xs">
+                                    Max Rounds
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
+
+            <div className="absolute inset-x-0 bottom-0 border-t border-indigo-600/30 bg-[#030512]/90 px-3 py-2">
+                <p className="truncate text-[10px] uppercase tracking-[0.18em] text-indigo-200/55 sm:text-xs">
+                    ShadowBidder closed Apex Chronos at $2,830 | PriceSlayer got Chrome Void for -49% off list | New record: -49% off Chrome Void
+                </p>
+            </div>
         </main>
     );
 }

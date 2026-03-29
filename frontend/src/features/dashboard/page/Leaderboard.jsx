@@ -1,76 +1,79 @@
 import React from "react";
 
 function Leaderboard() {
-	const students = [
-		{ rank: 1, name: "Ayan Sahil", price: 210 },
-		{ rank: 2, name: "Sujal Sharma", price: 210 },
-		{ rank: 3, name: "Niraj Kumar", price: 210 },
-		{ rank: 4, name: "Siddhesh Awasare", price: 210 },
-		{ rank: 5, name: "Rajiv Kumar", price: 210 },
-		{ rank: 6, name: "Niraj Kumar Verma", price: 210 },
-		{ rank: 7, name: "Aadi", price: 210 },
-		{ rank: 8, name: "Prerna Sharma", price: 210 },
-		{ rank: 9, name: "Mehul Jain", price: 205 },
-		{ rank: 10, name: "Riya Das", price: 204 },
-		{ rank: 11, name: "Aarav Nair", price: 203 },
-		{ rank: 12, name: "Ishika Roy", price: 202 },
-		{ rank: 13, name: "Kabir Mehta", price: 201 },
-		{ rank: 14, name: "Anaya Bose", price: 200 },
-		{ rank: 15, name: "Rohan Sethi", price: 199 },
-		{ rank: 16, name: "Arshdeep Singh", price: 194.8 },
-		{ rank: 17, name: "Sri Charan", price: 192 },
-		{ rank: 18, name: "Sujal Rajput", price: 191.8 },
-		{ rank: 19, name: "Meval Purohit", price: 184.9 },
-		{ rank: 20, name: "Ritam Maty", price: 168.3 },
+	const leaderboardData = [
+		{ rank: 1, name: "PriceSlayer", product: "Chrome Void", price: 4350, listPrice: 8500, score: 49 },
+		{ rank: 2, name: "SilverTongue", product: "Chrome Void", price: 4620, listPrice: 8500, score: 46 },
+		{ rank: 3, name: "NegotiationKing", product: "Forge Pro X", price: 1720, listPrice: 2800, score: 39 },
+		{ rank: 4, name: "CoolHandLuke", product: "Forge Pro X", price: 1810, listPrice: 2800, score: 35 },
+		{ rank: 5, name: "ShadowBidder", product: "Apex Chronos", price: 2830, listPrice: 4200, score: 33 },
+		{ rank: 6, name: "MindGamer", product: "Apex Chronos", price: 2950, listPrice: 4200, score: 30 },
+		{ rank: 7, name: "TheHaggler", product: "Forge Pro X", price: 1970, listPrice: 2800, score: 30 },
+		{ rank: 8, name: "DealMaker_X", product: "Apex Chronos", price: 3100, listPrice: 4200, score: 26 },
+		{ rank: 9, name: "IronMind_99", product: "Velox GT-R", price: 52400, listPrice: 62000, score: 15 },
+		{ rank: 10, name: "TacticFox", product: "Chrome Void", price: 5300, listPrice: 8500, score: 38 },
+		{ rank: 11, name: "PulseCloser", product: "Velox GT-R", price: 55800, listPrice: 62000, score: 10 },
+		{ rank: 12, name: "EchoBid", product: "Forge Pro X", price: 2050, listPrice: 2800, score: 27 },
 	];
 
 	return (
-		<main className="min-h-screen bg-slate-950 px-3 py-6 text-slate-100 sm:px-6 sm:py-10">
-			<section className="mx-auto w-full max-w-7xl rounded-2xl border border-sky-900/40 bg-slate-900 p-4 shadow-[0_20px_80px_-40px_rgba(2,6,23,0.95)] sm:p-6">
-				<h1 className="text-xl font-semibold text-slate-100 sm:text-3xl">Leaderboard - Top 20</h1>
+		<main className="min-h-screen bg-[#050814] px-3 py-2 text-slate-100 sm:px-6 ">
+			<section className="mx-auto w-full max-w-6xl h-full flex-col gap-6">
+				<div className="mb-2 flex items-start justify-between gap-3">
+					<div>
+						<h1 className=" text-yellow-300 text-2xl ">Leaderboard</h1>
+					</div>
+					<button
+						type="button"
+						className="rounded-lg border border-indigo-700/70 bg-indigo-950/50 px-4 py-2 text-sm text-indigo-300 transition hover:border-indigo-500/80 hover:text-indigo-200"
+					>
+						Home
+					</button>
+				</div>
 
-				<div className="mt-4 overflow-x-auto rounded-2xl border border-sky-900/40">
-					<div className="min-w-130">
-						<div className="grid grid-cols-[120px_1fr_120px] items-center bg-slate-950 px-5 py-4 text-sm font-semibold uppercase tracking-wide text-sky-200/70 sm:text-2xl">
-							<span className="text-center">Rank</span>
-							<span className="text-center">Name</span>
-							<span className="text-center">Price</span>
+				<div className="overflow-auto no-scrollbar rounded-2xl border border-indigo-900/50 bg-[#0c1126]/85 shadow-[0_28px_80px_-35px_rgba(2,6,23,0.9)] ">
+					<div className="min-w-245 h-[42rem]">
+						<div className="flex items-center border-b border-indigo-900/40 bg-[#0a0f21] px-6 py-4 text-xs font-semibold uppercase tracking-[0.22em] text-indigo-300/45 sm:text-sm">
+							<span className="w-22.5 shrink-0">Rank</span>
+							<span className="min-w-0 flex-[2.1]">Negotiator</span>
+							<span className="min-w-0 flex-[1.2]">Product</span>
+							<span className="min-w-0 flex-1">Price / List</span>
+							<span className="min-w-0 flex-1">Score</span>
 						</div>
 
-						{students.map((student) => {
-							const isTopThree = student.rank <= 3;
-							const topThreeRowStyles = {
-								1: "border-l-4 border-l-cyan-300 bg-gradient-to-r from-cyan-500/20 to-slate-800/95",
-								2: "border-l-4 border-l-sky-300 bg-gradient-to-r from-sky-500/15 to-slate-800/95",
-								3: "border-l-4 border-l-blue-300 bg-gradient-to-r from-blue-500/10 to-slate-800/95",
-							};
+						{leaderboardData.map((row) => {
+							const isTopThree = row.rank <= 3;
+							const priceLabel = `$${row.price.toLocaleString()}`;
+							const listLabel = `$${row.listPrice.toLocaleString()}`;
+							const rankLabel = row.rank <= 3 ? `${row.rank}` : `#${row.rank}`;
 
 							return (
 								<article
-									key={student.rank}
-									className={`grid grid-cols-[120px_1fr_120px] items-center border-t border-sky-900/30 px-5 py-4 ${
-										isTopThree ? topThreeRowStyles[student.rank] : "bg-slate-900"
+									key={row.rank}
+									className={`flex items-center border-t border-indigo-900/35 px-6 py-4 ${
+										isTopThree ? "bg-indigo-950/35" : "bg-[#0c1126]/80"
 									}`}
 								>
-									<div
-										className={`text-center text-lg font-semibold sm:text-3xl ${
-											isTopThree ? "text-cyan-200" : "text-sky-200/70"
-										}`}
-									>
-										{student.rank}
+									<div className="w-22.5 shrink-0 text-lg font-bold text-indigo-300 sm:text-2xl">{rankLabel}</div>
+
+									<div className="min-w-0 flex-[2.1]">
+										<p className="truncate text-xl font-semibold text-slate-100 sm:text-2xl">{row.name}</p>
+										<p className="truncate text-base uppercase tracking-wide text-indigo-400/75 sm:text-lg">{row.product}</p>
 									</div>
 
-									<div className="min-w-0 text-center">
-										<p className="truncate text-base font-semibold text-slate-100 sm:text-3xl">{student.name}</p>
+									<div className="min-w-0 flex-[1.2] truncate text-lg uppercase text-indigo-400/75 sm:text-xl">{row.product}</div>
+
+									<div className="min-w-0 flex-1">
+										<p className="text-xl font-bold text-emerald-400 sm:text-2xl">{priceLabel}</p>
+										<p className="truncate text-lg text-indigo-300/35 sm:text-xl">/ {listLabel}</p>
 									</div>
 
-									<span
-										className={`text-center text-base font-bold sm:text-3xl ${
-											isTopThree ? "text-cyan-300" : "text-sky-300"
-										}`}
-									>
-										{student.price}
-									</span>
+									<div className="min-w-0 flex-1">
+										<p className="text-xl font-bold text-emerald-400 sm:text-2xl">-{row.score}%</p>
+										<div className="mt-2 h-1.5 w-full rounded-full bg-indigo-900/55">
+											<div className="h-full rounded-full bg-emerald-400" style={{ width: `${row.score}%` }} />
+										</div>
+									</div>
 								</article>
 							);
 						})}

@@ -4,6 +4,7 @@ import Registration from "../features/auth/page/Registration";
 import MainDashboard from "../features/dashboard/page/MainDashboard";
 import ProtectedRoutes from "../features/dashboard/component/ProtectedRoutes";
 import Leaderboard from "../features/dashboard/page/Leaderboard";
+import GameDashboard from "../features/dashboard/page/GameDashboard";
 
 
 
@@ -23,6 +24,10 @@ export const AppRouter = createBrowserRouter([
     },{
         path: "/leaderboard",
         element: <Leaderboard/>
+    },
+    {
+        path: "/game",
+        element: <GameDashboard />
     }
 ])
 
