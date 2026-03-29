@@ -10,6 +10,7 @@ export const AppRouter = createBrowserRouter([
     {
         path: "/",
         element: <ProtectedRoutes><MainDashboard /></ProtectedRoutes>
+        // element: <MainDashboard />
     },
     {
         path: "/login",

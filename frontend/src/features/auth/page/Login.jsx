@@ -1,17 +1,20 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate()
 
-const { handleLogin ,loading } = useAuth()
+
+  const { handleLogin, loading } = useAuth()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     await handleLogin(email, password)
+    navigate("/")
 
   };
 
@@ -94,9 +97,9 @@ const { handleLogin ,loading } = useAuth()
               type="submit"
               className="w-full bg-gradient-to-r from-blue-400 to-blue-500 cursor-pointer hover:from-blue-500 hover:to-blue-600 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
             >{
-              loading ? "Signing in..." : "Sign In"
-            }
-            
+                loading ? "Signing in..." : "Sign In"
+              }
+
             </button>
           </form>
 

@@ -1,22 +1,20 @@
-import React, { Children } from 'react'
 import { useAuth } from '../../auth/hooks/useAuth'
 import { Navigate } from 'react-router-dom'
 
-function ProtectedRoutes({Children}) {
-const{user ,loading} = useAuth()
+function Protected({ children }) {
 
-
-if(loading){
-    return <div>Loading...</div>
+    const { user, loading } = useAuth()
+    // Redirect to login if user not found after loading completes
+    if (!user && loading === false) {
+        return (
+            <Navigate to="/login" replace={true} />
+        )
+    }
+    return (
+        <div>
+            {children}
+        </div>
+    )
 }
 
-if(!user){
-    return <Navigate to="/login" />
-}
-
-  return (
-    <div>{Children}</div>
-  )
-}
-
-export default ProtectedRoutes
+export default Protected
