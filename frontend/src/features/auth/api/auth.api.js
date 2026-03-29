@@ -2,12 +2,12 @@ import axios from 'axios';
 
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_URL,
-    withCredentials: true, // Include cookies in requests
-      headers: {
-        "Content-Type": "application/json"
-    }
-})
+  baseURL: import.meta.env.VITE_URL,
+  withCredentials: true, // Include cookies in requests
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
 
 

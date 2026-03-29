@@ -7,13 +7,17 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-const { handleLogin } = useAuth()
+const { handleLogin ,loading } = useAuth()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     await handleLogin(email, password)
 
   };
+
+
+
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 flex items-center justify-center px-4 sm:px-6 lg:px-8">
@@ -89,8 +93,10 @@ const { handleLogin } = useAuth()
             <button
               type="submit"
               className="w-full bg-gradient-to-r from-blue-400 to-blue-500 cursor-pointer hover:from-blue-500 hover:to-blue-600 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
-            >
-              Sign In
+            >{
+              loading ? "Signing in..." : "Sign In"
+            }
+            
             </button>
           </form>
 

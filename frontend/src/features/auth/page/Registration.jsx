@@ -7,7 +7,7 @@ export default function Registration() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const { handleRegister } = useAuth()
+    const { handleRegister, loading } = useAuth()
 
 
     const handleSubmit = async (e) => {
@@ -122,7 +122,9 @@ export default function Registration() {
                             type="submit"
                             className="w-full bg-gradient-to-r from-cyan-400 cursor-pointer to-cyan-500 hover:from-cyan-500 hover:to-cyan-600 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2"
                         >
-                            Create Account
+                            {
+                                loading ? "Creating Account..." : "Sign Up"
+                            }
                         </button>
                     </form>
 
