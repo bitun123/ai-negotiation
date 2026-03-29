@@ -38,6 +38,6 @@ authRouter.post("/login", loginValidator, validateRequest, loginController);
 
 
 
-authRouter.post("/get-me",authMiddleware , getMeController)
+authRouter.get("/get-me",authMiddleware , getMeController)
 
 export default authRouter;

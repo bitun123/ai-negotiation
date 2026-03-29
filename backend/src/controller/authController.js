@@ -90,15 +90,25 @@ export const loginController = async (req, res) => {
 export const getMeController = async (req,res)=>{
   try {
 
-    const userId = req.user._id; // Assuming authMiddleware sets req.userId
+    const userId = req.user.id; // Assuming authMiddleware sets req.userId
+
+    console.log("User ID from authMiddleware:", userId);
     const user = await userModel.findById(userId);
     if(!user){
       return res.status(404).json({ message: "User not found" });
     }
-    res.status(200).json({ user });
+    res.status(200).json({ 
+      message: "User fetched successfully",
+      user: {
+        userName: user.userName,
+        email: user.email,
+      }
+     });
   } catch (error) {
     console.error("Error in getMeController:", error);
     res.status(500).json({ message: "Internal server error" });
 
   }
 }
+
+
