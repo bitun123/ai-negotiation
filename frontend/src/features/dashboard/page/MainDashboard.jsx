@@ -1,8 +1,9 @@
 import React from 'react'
+import Layout from './Layout'
 
 function MainDashboard() {
   return (
-    <div>MainDashboard</div>
+    <Layout />
   )
 }
 

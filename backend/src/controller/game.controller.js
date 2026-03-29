@@ -6,8 +6,6 @@ import generateProduct from "../utils/generateProduct.js";
 export const createGameController = async (req, res) => {
   try {
     const userId = req.user?.id;
-    console.log("Creating game for user:", userId);
-
     const productData = generateProduct();
 
     const newGame = await gameModel.create({

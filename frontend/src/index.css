@@ -1,1 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=Urbanist:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss";
+
+@theme {
+	--font-display: "Archivo Black", sans-serif;
+	--font-sans: "Urbanist", sans-serif;
+}
+
+@layer base {
+	html,
+	body,
+	#root {
+		min-height: 100%;
+	}
+
+	body {
+		font-family: var(--font-sans);
+		background-color: #020617;
+		color: #e2e8f0;
+	}
+}
