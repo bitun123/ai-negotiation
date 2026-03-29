@@ -1,14 +1,18 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e) => {
+const { handleLogin } = useAuth()
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Logic will be handled elsewhere
+    await handleLogin(email, password)
+
   };
 
   return (

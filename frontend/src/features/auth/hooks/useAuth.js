@@ -11,10 +11,8 @@ export const useAuth = ()=>{
         const response = await login(email,password)
         setUser(response.user)
         setError("")
-        setloading(false)
     } catch (error) {
         setError(error.message)
-
     }
     finally{
         setloading(false)
