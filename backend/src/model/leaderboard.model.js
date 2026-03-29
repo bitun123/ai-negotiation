@@ -28,7 +28,7 @@ const leaderboardSchema = new mongoose.Schema(
 );
 
 // 🔥 fast ranking
-leaderboardSchema.index({ score: -1 });
+leaderboardSchema.index({ score: -1, finalPrice: 1 });
 
 
 const leaderboardModel = mongoose.model("leaderboard", leaderboardSchema);

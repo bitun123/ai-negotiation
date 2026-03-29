@@ -40,4 +40,7 @@ authRouter.post("/login", loginValidator, validateRequest, loginController);
 
 authRouter.get("/get-me",authMiddleware , getMeController)
 
+
+
+
 export default authRouter;

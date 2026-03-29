@@ -21,6 +21,7 @@ export const createGameController = async (req, res) => {
       success: true,
       message: "Game started successfully",
       data: {
+        id : newGame._id,
         product: newGame.product,
         initialPrice: newGame.initialPrice,
       },
@@ -79,6 +80,28 @@ export const getGameController = async (req, res) => {
         difficulty: game.difficulty,
         aiPersonality: game.aiPersonality,
       },
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+
+export const getLeaderboardController = async(req, res)=>{
+  try {
+    const userId = req.user?.id;
+    const games = await gameModel.find({userId, status: "completed"}).sort({createdAt: -1})
+    
+    
+    res.status(200).json({
+      success: true,
+      data: games.map(game=>({
+        userId: game.userId,
+        gameId: game._id,
+        product: game.product,
+        finalPrice: game.finalPrice,
+        createdAt: game.createdAt,
+      })),
     });
   } catch (error) {
     res.status(400).json({ error: error.message });
