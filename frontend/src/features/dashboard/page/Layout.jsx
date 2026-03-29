@@ -1,7 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { usePage } from "../hooks/usePage";
 
 function Layout() {
+
+const {createNewGame }  = usePage()
+
+const handleStartGame = async () => {
+    await createNewGame()
+    
+}
     return (
         <main className="relative min-h-screen overflow-hidden bg-[#040817] text-slate-100">
             <div className="pointer-events-none absolute inset-0">
@@ -31,6 +39,7 @@ function Layout() {
 
                     <div className="mx-auto mt-8 flex w-full max-w-sm flex-col gap-3">
                     <Link
+                    onClick={handleStartGame}
                             to="/game"
                             className="w-full rounded-md border border-yellow-300/80 bg-yellow-400 px-6 py-3 font-display text-xl uppercase tracking-[0.25em] text-slate-950 transition hover:bg-yellow-300"
                         >
