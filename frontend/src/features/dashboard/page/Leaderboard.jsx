@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Leaderboard() {
 	const leaderboardData = [
@@ -23,12 +24,14 @@ function Leaderboard() {
 					<div>
 						<h1 className=" text-yellow-300 text-2xl ">Leaderboard</h1>
 					</div>
+                    <Link to="/">
 					<button
 						type="button"
 						className="rounded-lg border border-indigo-700/70 bg-indigo-950/50 px-4 py-2 text-sm text-indigo-300 transition hover:border-indigo-500/80 hover:text-indigo-200"
 					>
 						Home
 					</button>
+                    </Link>
 				</div>
 
 				<div className="overflow-auto no-scrollbar rounded-2xl border border-indigo-900/50 bg-[#0c1126]/85 shadow-[0_28px_80px_-35px_rgba(2,6,23,0.9)] ">
