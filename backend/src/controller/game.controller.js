@@ -1,4 +1,4 @@
-import getAIResponse from "../services/ai.service.js";
+
 import gameModel from "../model/game.model.js";
 import { processOffer } from "../services/game.service.js";
 import generateProduct from "../utils/generateProduct.js";
@@ -6,7 +6,10 @@ import generateProduct from "../utils/generateProduct.js";
 export const createGameController = async (req, res) => {
   try {
     const userId = req.user?.id;
-    const productData = generateProduct();
+
+const { selectedProduct, selectedDifficulty } = req.body;
+
+    const productData = generateProduct(selectedProduct, selectedDifficulty);
 
     const newGame = await gameModel.create({
       userId,

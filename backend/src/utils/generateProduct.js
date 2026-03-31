@@ -1,4 +1,4 @@
-function generateProduct() {
+function generateProduct(selectedProduct, selectedDifficulty) {
   const productConfig = {
     "iPhone 14": { min: 70000, max: 90000 },
     "Gaming Laptop": { min: 60000, max: 120000 },
@@ -16,51 +16,47 @@ function generateProduct() {
     "Smart Thermostat": { min: 5000, max: 20000 },
   };
 
-  const products = Object.keys(productConfig);
+  // 🛑 Validate product
+  if (!productConfig[selectedProduct]) {
+    throw new Error("Invalid product selected");
+  }
 
-  // 🎲 Random product
-  const product = products[Math.floor(Math.random() * products.length)];
-
-  const { min, max } = productConfig[product];
+  const { min, max } = productConfig[selectedProduct];
 
   // 💰 Initial price
   const initialPrice = Math.round(Math.random() * (max - min) + min);
 
-  // 🎯 Difficulty-based price range
-  const difficulties = ["easy", "medium", "hard"];
-  const difficulty =
-    difficulties[Math.floor(Math.random() * difficulties.length)];
-
   // 🎯 Difficulty-based multiplier
   let minMultiplier;
 
-  switch (difficulty) {
+  switch (selectedDifficulty) {
     case "easy":
       minMultiplier = 0.5 + Math.random() * 0.1;
+      break;
+    case "medium":
+      minMultiplier = 0.6 + Math.random() * 0.2;
       break;
     case "hard":
       minMultiplier = 0.75 + Math.random() * 0.1;
       break;
     default:
-      minMultiplier = 0.6 + Math.random() * 0.2;
+      throw new Error("Invalid difficulty level");
   }
 
   const minPrice = Math.round(initialPrice * minMultiplier);
 
-  // 🎯 Target price (for smarter AI decisions later)
   const targetPrice = Math.round(initialPrice * 0.85);
 
-  // 🎭 AI personality
   const personalities = ["friendly", "greedy", "strict"];
   const aiPersonality =
     personalities[Math.floor(Math.random() * personalities.length)];
 
   return {
-    product,
+    product: selectedProduct,
     initialPrice,
     minPrice,
     targetPrice,
-    difficulty,
+    difficulty: selectedDifficulty,
     aiPersonality,
   };
 }

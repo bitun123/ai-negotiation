@@ -40,8 +40,6 @@ const gameSchema = new mongoose.Schema(
       default: 5,
     },
     rounds: [roundSchema],
-
-    // 🔥 AI-related fields (future-ready)
     aiPersonality: {
       type: String,
       default: "normal",
