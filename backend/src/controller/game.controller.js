@@ -104,11 +104,11 @@ export const getLeaderboardController = async (req, res) => {
   try {
     const topGames = await gameModel
       .find({ status: "completed" })
-      .sort({ discount: -1, roundsUsed: 1 }) // Sort by discount desc, then roundsUsed asc
+      .sort({ discount: -1, roundsUsed: 1 }) 
       .limit(10)
       .select("product initialPrice finalPrice discount roundsUsed rounds userId ")
       .populate("userId");
-    // Assuming userId references a User model with a 'name' field
+
 
    
 
@@ -118,7 +118,7 @@ export const getLeaderboardController = async (req, res) => {
         product: game.product,
         initialPrice: game.initialPrice,
         finalPrice: game.finalPrice,
-        discount: game.discount,
+        discount: game.discount + "%",
         roundsUsed: game.rounds.length,
         userName: game.userId?.userName || "Unknown", // Get user name from populated userId
       })),
