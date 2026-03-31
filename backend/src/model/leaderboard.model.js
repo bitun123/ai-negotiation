@@ -22,6 +22,10 @@ const leaderboardSchema = new mongoose.Schema(
     },
     roundsUsed: {
       type: Number
+    },
+    discount: {
+      type: Number,
+        required: true
     }
   },
   { timestamps: true }

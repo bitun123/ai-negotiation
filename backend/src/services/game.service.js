@@ -6,7 +6,7 @@ export const createProcessOffer = ({
   model = gameModel,
   aiResponder = getAIResponse,
   historyFormatter = formatHistory,
-} = {}) => async (gameId, offer) => {
+} = {}) => async (gameId, offer , userMessage) => {
   const normalizedOffer = Number(offer);
   if (!Number.isFinite(normalizedOffer) || normalizedOffer < 0) {
     throw new Error("Invalid offer");
@@ -25,6 +25,8 @@ export const createProcessOffer = ({
   const history = historyFormatter(game.rounds.slice(-3));
   const lastCounter = game.rounds.at(-1)?.aiCounter || initialPrice;
 
+
+
   let baseDrop = difficulty === "easy" ? 80 : difficulty === "hard" ? 30 : 50;
   if (aiPersonality === "greedy") baseDrop -= 10;
   if (aiPersonality === "friendly") baseDrop += 10;
@@ -38,6 +40,7 @@ export const createProcessOffer = ({
     action = "reject";
     aiResponse = await aiResponder({
       offer: normalizedOffer,
+      userMessage : userMessage || "",
       minPrice,
       initialPrice,
       currentRound,
