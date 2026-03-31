@@ -1,15 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { usePage } from "../hooks/usePage";
+
+import PopupProduct from "../component/PopupProduct";
+import { useState } from "react";
 
 function Layout() {
 
-const {createNewGame }  = usePage()
+    const [open, setOpen] = useState(false)
 
-const handleStartGame = async () => {
-    await createNewGame()
-    
-}
+
+    const handleStartGame = async () => {
+        setOpen(true)
+
+    }
     return (
         <main className="relative min-h-screen overflow-hidden bg-[#040817] text-slate-100">
             <div className="pointer-events-none absolute inset-0">
@@ -38,14 +41,14 @@ const handleStartGame = async () => {
                     </p>
 
                     <div className="mx-auto mt-8 flex w-full max-w-sm flex-col gap-3">
-                    <Link
-                    onClick={handleStartGame}
-                            to="/game"
+                        <button
+                            onClick={handleStartGame}
+                   
                             className="w-full rounded-md border border-yellow-300/80 bg-yellow-400 px-6 py-3 font-display text-xl uppercase tracking-[0.25em] text-slate-950 transition hover:bg-yellow-300"
                         >
                             Start Negotiation
-                        </Link>
-                   
+                        </button>
+
 
                         <Link
                             to="/leaderboard"
@@ -91,6 +94,10 @@ const handleStartGame = async () => {
                     ShadowBidder closed Apex Chronos at $2,830 | PriceSlayer got Chrome Void for -49% off list | New record: -49% off Chrome Void
                 </p>
             </div>
+
+            {
+                open ? <PopupProduct  onClose={() => setOpen(false)} /> : null
+            }
         </main>
     );
 }

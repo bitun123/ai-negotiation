@@ -14,11 +14,12 @@ export const usePage = () => {
     setmessage,
   } = useContext(PageContext);
 
-  const createNewGame = async () => {
+  const createNewGame = async (selectedProduct, selectedDifficulty) => {
     try {
       setloading(true);
       seterror("");
-      const response = await createGame();
+      const response = await createGame(selectedProduct, selectedDifficulty);
+      console.log(response);
       setproduct(response.data);
     } catch (error) {
       seterror(error.message);

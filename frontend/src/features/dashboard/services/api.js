@@ -11,8 +11,9 @@ const api = axios.create({
 
 
 // API function to create a new game
-export const createGame = async () => {
-const response  = await api.post("/api/games/")
+export const createGame = async (selectedProduct , selectedDifficulty) => {
+    console.log("Creating game with product:", selectedProduct, "and difficulty:", selectedDifficulty);
+const response  = await api.post("/api/games/", { selectedProduct, selectedDifficulty })
 return response.data
 }
 
