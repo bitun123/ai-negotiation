@@ -97,24 +97,30 @@ export const getGameController = async (req, res) => {
   }
 };
 
-
-export const getLeaderboardController = async(req, res)=>{
+export const getLeaderboardController = async (req, res) => {
   try {
-    const userId = req.user?.id;
-    const games = await gameModel.find({userId, status: "completed"}).sort({createdAt: -1})
-    
-    
-    res.status(200).json({
-      success: true,
-      data: games.map(game=>({
-        userId: game.userId,
-        gameId: game._id,
-        product: game.product,
-        finalPrice: game.finalPrice,
-        createdAt: game.createdAt,
-      })),
-    });
+     
+
+const topGames = await gameModel.find({ status: "completed" })
+  .sort({ discount: -1, roundsUsed: 1 }) // Sort by discount desc, then roundsUsed asc
+  .limit(10)
+  .select("product initialPrice finalPrice discount roundsUsed");
+
+
+  res.status(200).json({
+    success: true,
+    data: topGames.map(game => ({
+      product: game.product,
+      initialPrice: game.initialPrice,
+      finalPrice: game.finalPrice,
+      discount: game.discount + "%",
+      roundsUsed: game.roundsUsed,
+    })),
+  });
+
+
+
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
-};
+}
