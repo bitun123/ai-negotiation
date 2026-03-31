@@ -56,6 +56,10 @@ const gameSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
+
+
+
+
 const gameModel = mongoose.model("game", gameSchema);
 
 export default gameModel;
