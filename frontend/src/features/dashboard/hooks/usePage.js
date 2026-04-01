@@ -12,6 +12,8 @@ export const usePage = () => {
     seterror,
     message,
     setmessage,
+    id,
+    setid,
   } = useContext(PageContext);
 
   const createNewGame = async (selectedProduct, selectedDifficulty) => {
@@ -21,6 +23,7 @@ export const usePage = () => {
       const response = await createGame(selectedProduct, selectedDifficulty);
       console.log(response);
       setproduct(response.data);
+      setid(response.data.id);
     } catch (error) {
       seterror(error.message);
     } finally {
@@ -32,8 +35,7 @@ export const usePage = () => {
     try {
       setloading(true);
       const response = await makeOffer(gameId, offer, userMessage);
-     setmessage((prev) => [...prev, response.data]);
-     
+      setmessage((prev) => [...prev, response.data]);
     } catch (error) {
       seterror(error.message);
     } finally {
@@ -41,7 +43,5 @@ export const usePage = () => {
     }
   };
 
-
-
-  return { product, loading, error, createNewGame, handleMakeOffer };
+  return { product, loading, error, createNewGame, handleMakeOffer  , id, setid ,message};
 };

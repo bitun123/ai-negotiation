@@ -7,10 +7,11 @@ const [loading, setloading] = useState(false)
 const [error, seterror] = useState("")
 const [product, setproduct] = useState([])
 const [message, setmessage] = useState([])
+const [id, setid] = useState("")
 
 
     return (
-        <PageContext.Provider value={{product, setproduct, loading, setloading, error, seterror, message, setmessage}} >
+        <PageContext.Provider value={{product, setproduct, loading, setloading, error, seterror, message, setmessage, id, setid}} >
             {children}
         </PageContext.Provider>
     )
