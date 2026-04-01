@@ -28,11 +28,12 @@ export const usePage = () => {
     }
   };
 
-  const handleMakeOffer = async (gameId, offer) => {
+  const handleMakeOffer = async (gameId, offer, userMessage) => {
     try {
       setloading(true);
-      const response = await makeOffer(gameId, offer);
+      const response = await makeOffer(gameId, offer, userMessage);
      setmessage((prev) => [...prev, response.data]);
+     
     } catch (error) {
       seterror(error.message);
     } finally {

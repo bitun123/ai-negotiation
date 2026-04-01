@@ -21,8 +21,8 @@ return response.data
 
 
 // API function to make an offer in an ongoing game
-export const makeOffer = async(gameId, offer)=>{
-    const response = await api.post(`/api/games/${gameId}/offer`, {offer})
+export const makeOffer = async(gameId, offer ,userMessage )=>{
+    const response = await api.post(`/api/games/${gameId}/offer`, {offer ,userMessage})
     console.log(response.data)
     return response.data
 }
