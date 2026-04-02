@@ -3,6 +3,7 @@ import {
   createGameController,
   makeOfferController,
   getGameController,
+  getActiveGameController,
   getLeaderboardController
 } from "../controller/game.controller.js";
 import {authMiddleware} from "../middleware/auth.middleware.js";
@@ -23,6 +24,12 @@ gameRouter.post("/", authMiddleware, createGameController);
 // @input { offer }
 // */
 gameRouter.post("/:gameId/offer", authMiddleware, makeOfferController);
+
+//** @routes GET /api/games/active
+// @desc Get user's active ongoing game
+// @input None
+// */
+gameRouter.get("/active", authMiddleware, getActiveGameController);
 
 
 //** @routes GET /api/games/:gameId

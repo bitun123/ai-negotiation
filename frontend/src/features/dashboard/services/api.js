@@ -36,3 +36,13 @@ export const getGameState = async(gameId)=>{
     return response.data
 }
 
+export const getActiveGame = async()=>{
+    const response = await api.get("/api/games/active")
+    return response.data
+}
+
+
+export const getLeaderBoard  = async()=>{
+    const response = await api.get("/api/leaderboard")
+    return response.data
+}

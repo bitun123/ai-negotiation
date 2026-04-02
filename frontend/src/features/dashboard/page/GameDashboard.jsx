@@ -7,7 +7,7 @@ import { usePage } from "../hooks/usePage";
 function GameDashboard() {
 
 
-    const { loading, error, handleMakeOffer, id, message, setmessage } = usePage();
+    const { loading, error, handleMakeOffer, id, message, setmessage, hydrateActiveGame } = usePage();
 
     const [offer, setoffer] = useState("")
     const [messageValue, setmessageValue] = useState("")
@@ -38,11 +38,9 @@ function GameDashboard() {
         setoffer("")
         setmessageValue("")
     }
-
-
-useEffect(()=>{
-
-},[])
+    useEffect(() => {
+        hydrateActiveGame()
+    }, [])
 
     return (
         <main className="w-full min-h-screen bg-[#060916] p-2 text-slate-100 sm:px-4 sm:py-4">
@@ -53,10 +51,10 @@ useEffect(()=>{
                     <div className="h-[32rem] rounded-2xl border border-indigo-900/40 bg-[#0b0f22] p-3 shadow-[0_20px_80px_-45px_rgba(2,6,23,0.9)] sm:p-4 overflow-auto">
                         <div className="space-y-3 sm:space-y-4">
 
-                           {message.length === 0  ?  <div className="mx-auto w-full rounded-lg border border-sky-700/45 bg-sky-900/20 px-3 py-3 text-center text-base font-medium text-sky-300 sm:max-w-[94%] sm:text-xl">
+                            {message.length === 0 ? <div className="mx-auto w-full rounded-lg border border-sky-700/45 bg-sky-900/20 px-3 py-3 text-center text-base font-medium text-sky-300 sm:max-w-[94%] sm:text-xl">
                                 <span className="text-yellow-400">Round 1 of 5 begins.</span>
 
-                            </div> :""}
+                            </div> : ""}
 
                             {message.map((message) => {
                                 const isLeft = message.side === "left";
@@ -88,7 +86,7 @@ useEffect(()=>{
                                         ) : null}
                                     </div>
                                 );
-                            })}                   
+                            })}
 
                             <div ref={messagesEndRef} />
 

@@ -102,6 +102,36 @@ export const getGameController = async (req, res) => {
   }
 };
 
+export const getActiveGameController = async (req, res) => {
+  try {
+    const userId = req.user?.id;
+
+    const game = await gameModel
+      .findOne({ userId, status: "ongoing" })
+      .sort({ createdAt: -1 });
+
+    if (!game) {
+      return res.status(404).json({ error: "No active game found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: {
+        gameId: game._id,
+        product: game.product,
+        initialPrice: game.initialPrice,
+        status: game.status,
+        rounds: game.rounds,
+        finalPrice: game.finalPrice,
+        difficulty: game.difficulty,
+        aiPersonality: game.aiPersonality,
+      },
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 export const getLeaderboardController = async (req, res) => {
   try {
     const topGames = await gameModel

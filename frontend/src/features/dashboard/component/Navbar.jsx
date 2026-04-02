@@ -3,7 +3,9 @@ import { usePage } from "../hooks/usePage";
 
 function Navbar() {
 
-  const { product ,gameinformation } = usePage();
+  const { product ,gameinformation  } = usePage();
+
+console.log(gameinformation)
 
 	return (
 		<header className="w-full border border-indigo-900/50 bg-[#0a0e21] px-4 py-4 shadow-[0_16px_40px_-28px_rgba(2,6,23,0.9)] sm:px-6 rounded">

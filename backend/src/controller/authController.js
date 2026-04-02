@@ -90,7 +90,7 @@ export const loginController = async (req, res) => {
 export const getMeController = async (req,res)=>{
   try {
 
-    const userId = req.user.id; // Assuming authMiddleware sets req.userId
+      const userId = req.user.id; // Assuming authMiddleware sets req.userId
 
     console.log("User ID from authMiddleware:", userId);
     const user = await userModel.findById(userId);
