@@ -162,3 +162,22 @@ export const getLeaderboardController = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+
+export const getQuiteController = async (req, res) => {
+  try{
+    const userId = req.user?.id;
+    const quite  = await gameModel.find({ userId, status: "ongoing" });
+    if(!quite){
+      return res.status(404).json({ error: "No active game found" });
+    }
+    quite.status = "completed";
+    await quite.save();
+    res.status(200).json({
+      success: true,
+      message: "Game quit successfully",
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}

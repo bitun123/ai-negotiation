@@ -4,7 +4,8 @@ import {
   makeOfferController,
   getGameController,
   getActiveGameController,
-  getLeaderboardController
+  getLeaderboardController,
+  getQuiteController
 } from "../controller/game.controller.js";
 import {authMiddleware} from "../middleware/auth.middleware.js";
 
@@ -45,5 +46,13 @@ gameRouter.get("/:gameId", authMiddleware, getGameController);
 // gameRouter.get("/", authMiddleware, getAllGamesController);
 
 gameRouter.post("/leaderboard", authMiddleware, getLeaderboardController);
+
+
+
+//** @routes POST /api/games/quite
+// @desc Quit the ongoing game
+// @input None
+// */
+gameRouter.post("/quite", authMiddleware, getQuiteController);
 
 export default gameRouter;
