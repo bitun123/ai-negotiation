@@ -36,6 +36,9 @@ export const getGameState = async(gameId)=>{
     return response.data
 }
 
+
+
+// API function to get the user's active ongoing game
 export const getActiveGame = async()=>{
     const response = await api.get("/api/games/active")
     return response.data
@@ -44,5 +47,11 @@ export const getActiveGame = async()=>{
 
 export const getLeaderBoard  = async()=>{
     const response = await api.get("/api/leaderboard")
+    return response.data
+}
+
+
+export const quitGame = async()=>{
+    const response = await api.post("/api/games/quite")
     return response.data
 }

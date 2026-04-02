@@ -3,9 +3,11 @@ import { usePage } from "../hooks/usePage";
 
 function Navbar() {
 
-  const { product ,gameinformation  } = usePage();
+  const { product ,gameinformation  ,quitCurrentGame } = usePage();
 
-console.log(gameinformation)
+const handleQuiteGame  = async()=>{
+  await quitCurrentGame()
+}
 
 	return (
 		<header className="w-full border border-indigo-900/50 bg-[#0a0e21] px-4 py-4 shadow-[0_16px_40px_-28px_rgba(2,6,23,0.9)] sm:px-6 rounded">
@@ -34,6 +36,7 @@ console.log(gameinformation)
 					<button
 						type="button"
 						className="rounded-md border border-indigo-700/55 bg-indigo-950/35 px-3 py-1.5 text-xs font-medium tracking-[0.08em] text-indigo-300 transition hover:border-indigo-500/80 hover:text-indigo-200 sm:text-sm"
+						onClick={handleQuiteGame}
 					>
 						Quit
 					</button>

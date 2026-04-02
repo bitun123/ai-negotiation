@@ -4,6 +4,7 @@ import {
   makeOffer,
   getGameState,
   getActiveGame,
+  quitGame,
 } from "../services/api";
 import { PageContext } from "../state/PageProvider";
 
@@ -21,6 +22,8 @@ export const usePage = () => {
     setid,
     gameinformation,
     setgameinformation,
+    leaderBoard,
+    setleaderBoard,
   } = useContext(PageContext);
 
   const createNewGame = async (selectedProduct, selectedDifficulty) => {
@@ -152,8 +155,35 @@ export const usePage = () => {
                 id: Date.now() + 1,
               },
             ]
-          : []
+          : [],
       );
+    } catch (error) {
+      seterror(error.message);
+    } finally {
+      setloading(false);
+    }
+  };
+
+  const quitCurrentGame = async () => {
+    try {
+      setloading(true);
+      await quitGame();
+      setgameinformation(null);
+      setmessage([]);
+      setid("");
+      setproduct([]);
+    } catch (error) {
+      seterror(error.message);
+    } finally {
+      setloading(false);
+    }
+  };
+
+  const handleGetleaderBoard = async () => {
+    try {
+      setloading(true);
+      const response = await getLeaderBoard();
+      setleaderBoard(response.data);
     } catch (error) {
       seterror(error.message);
     } finally {
@@ -174,5 +204,8 @@ export const usePage = () => {
     message,
     setmessage,
     gameinformation,
+    quitCurrentGame,
+    leaderBoard,
+    handleGetleaderBoard,
   };
 };

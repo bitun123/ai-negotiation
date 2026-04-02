@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { usePage } from "../hooks/usePage";
 
 function Leaderboard() {
+    const { quitCurrentGame ,leaderBoard ,handleGetleaderBoard} = usePage()
+
     const leaderboardData = [
         { rank: 1, name: "PriceSlayer", product: "Chrome Void", price: 4350, listPrice: 8500, score: 49 },
         { rank: 2, name: "SilverTongue", product: "Chrome Void", price: 4620, listPrice: 8500, score: 46 },
@@ -17,6 +20,14 @@ function Leaderboard() {
         { rank: 12, name: "EchoBid", product: "Forge Pro X", price: 2050, listPrice: 2800, score: 27 },
     ];
 
+    const handleQuit = async () => {
+        alert("Are you sure you want to quit the game? Your current score will not be saved.");
+        await quitCurrentGame()
+
+    }
+
+ 
+    console.log(leaderBoard)
     return (
         <main className="min-h-screen bg-[#050814] px-3 py-2 text-slate-100 sm:px-6 ">
             <section className="mx-auto w-full max-w-6xl h-full flex-col gap-6">
@@ -26,6 +37,7 @@ function Leaderboard() {
                     </div>
                     <Link to="/">
                         <button
+                            onClick={handleQuit}
                             type="button"
                             className="rounded-lg border border-indigo-700/70 bg-indigo-950/50 px-4 py-2 text-sm text-indigo-300 transition hover:border-indigo-500/80 hover:text-indigo-200"
                         >
