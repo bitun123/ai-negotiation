@@ -5,6 +5,7 @@ import {
   getGameState,
   getActiveGame,
   quitGame,
+  getLeaderBoard
 } from "../services/api";
 import { PageContext } from "../state/PageProvider";
 

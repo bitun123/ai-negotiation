@@ -98,17 +98,17 @@ function PopupProduct() {
         "easy", "medium", "hard"
     ]
 
-    const { createNewGame ,loading } = usePage()
-  const navigate =   useNavigate()
+    const { createNewGame, loading } = usePage()
+    const navigate = useNavigate()
 
-const handleStartGame = async () => {
-    if (!selectedProduct || !selectedDifficulty) {
-        alert("Please select a product and difficulty level to start the game.");
-        return;
+    const handleStartGame = async () => {
+        if (!selectedProduct || !selectedDifficulty) {
+            alert("Please select a product and difficulty level to start the game.");
+            return;
+        }
+        await createNewGame(selectedProduct, selectedDifficulty);
+        navigate("/game")
     }
-  await  createNewGame(selectedProduct, selectedDifficulty);
-navigate("/game")
-}
 
     return (
         <div className='w-full min-h-screen flex justify-center items-center absolute top-0 left-0 bg-black/50'>
@@ -122,8 +122,8 @@ navigate("/game")
                             <button
                                 key={item}
                                 className={`cursor-pointer px-4 py-2 border rounded active:scale-95 text-sm transition ${isActiveDifficulty
-                                        ? 'border-blue-400 bg-blue-500/20 text-blue-200'
-                                        : 'border-gray-500 text-gray-200 hover:border-gray-300'
+                                    ? 'border-blue-400 bg-blue-500/20 text-blue-200'
+                                    : 'border-gray-500 text-gray-200 hover:border-gray-300'
                                     }`}
                                 onClick={() => setSelectedDifficulty(item)}
                             >
@@ -140,8 +140,8 @@ navigate("/game")
                             <div
                                 key={product.name}
                                 className={`w-full relative mb-3 aspect-square rounded transition cursor-pointer border-2 ${isActiveProduct
-                                        ? 'border-blue-400 ring-2 ring-blue-400/40'
-                                        : 'border-transparent hover:border-gray-500'
+                                    ? 'border-blue-400 ring-2 ring-blue-400/40'
+                                    : 'border-transparent hover:border-gray-500'
                                     }`}
                                 onClick={() => setSelectedProduct(product.name)}
                             >
@@ -163,10 +163,10 @@ navigate("/game")
                 </div>
 
                 <div className='w-full p-4 flex justify-center'>
-                    <button 
-                    onClick={handleStartGame}
-                    className='px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 transition'>
-                       {loading ? "Starting..." : "Start Negotiation"}
+                    <button
+                        onClick={handleStartGame}
+                        className='px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 transition'>
+                        {loading ? "Starting..." : "Start Negotiation"}
                     </button>
                 </div>
             </div>

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useEffect } from 'react';
 
 // Create an Axios instance with default configuration
 const api = axios.create({
@@ -46,7 +47,7 @@ export const getActiveGame = async()=>{
 
 
 export const getLeaderBoard  = async()=>{
-    const response = await api.get("/api/leaderboard")
+    const response = await api.post("/api/games/leaderboard")
     return response.data
 }
 
@@ -55,3 +56,4 @@ export const quitGame = async()=>{
     const response = await api.post("/api/games/quite")
     return response.data
 }
+

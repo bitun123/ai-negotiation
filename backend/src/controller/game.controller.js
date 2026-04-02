@@ -167,7 +167,8 @@ export const getLeaderboardController = async (req, res) => {
 export const getQuiteController = async (req, res) => {
   try{
     const userId = req.user?.id;
-    const quite  = await gameModel.find({ userId, status: "ongoing" });
+    const quite  = await gameModel.findOne({ userId, status: "ongoing" });
+    console.log(quite)
     if(!quite){
       return res.status(404).json({ error: "No active game found" });
     }
