@@ -7,10 +7,11 @@ import { usePage } from "../hooks/usePage";
 function GameDashboard() {
 
 
-    const { product, loading, error, handleMakeOffer } = usePage();
+    const { product, loading, error, handleMakeOffer, id } = usePage();
 
     const [offer, setoffer] = useState("")
-
+    const [message, setmessage] = useState("")
+    console.log(id)
 
 
     const messages = [
@@ -22,11 +23,11 @@ function GameDashboard() {
     ];
 
 
-const handleOffer = async   (e)=>{
-e.preventDefault()
-   let gameId = product.id
-   await handleMakeOffer(gameId, offer)
-}
+    const handleOffer = async (e) => {
+        e.preventDefault()
+        let gameId = product.id
+        await handleMakeOffer(gameId, offer)
+    }
 
     return (
         <main className="w-full min-h-screen bg-[#060916] p-2 text-slate-100 sm:px-4 sm:py-4">
@@ -81,17 +82,25 @@ e.preventDefault()
                         onSubmit={handleOffer}
                     >
 
-                        <input
-                            placeholder="Your Offer......."
-                            type="text"
-                            value={offer}
-                            onChange={(e) => setoffer(e.target.value)}
-                            className="w-full rounded-lg border border-indigo-700/55 bg-indigo-950/25 px-3 py-2 text-base font-semibold text-slate-100 placeholder:text-indigo-200/40 focus:outline-none sm:text-lg"
-                        />
+                        <div className="flex items-center gap-3 w-full lg:flex-row  md:flex-row flex-col ">
+                            //offer input field
+                            <input
+                                placeholder="Your Offer......."
+                                type="text"
+                                value={offer}
+                                onChange={(e) => setoffer(e.target.value)}
+                                className="w-[20%] rounded-lg border border-indigo-700/55 bg-indigo-950/25 px-3 py-2 text-base font-semibold text-slate-100 placeholder:text-indigo-200/40 focus:outline-none sm:text-lg"
+                            />
 
+                            //message input field
+                            <input
+                                value={message}
+                                onChange={(e) => setmessage(e.target.value)}
 
+                                type="text" placeholder="Write Your Message" className=" w-[80%] rounded-lg border border-indigo-700/55 bg-indigo-950/25 px-3 py-2 text-base font-semibold text-slate-100 placeholder:text-indigo-200/40 focus:outline-none sm:text-lg " />
+                        </div>
                         <button
-                       
+
                             className="cursor-pointer rounded-lg border border-yellow-300/90 bg-yellow-400 px-5 py-2 text-sm font-bold text-slate-950 transition hover:bg-yellow-300 active:scale-95"
                         >
                             Make Offer

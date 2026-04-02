@@ -19,11 +19,20 @@ export const usePage = () => {
   const createNewGame = async (selectedProduct, selectedDifficulty) => {
     try {
       setloading(true);
+
+
       seterror("");
+
+
       const response = await createGame(selectedProduct, selectedDifficulty);
-      console.log(response);
+
+
+ 
+
+
       setproduct(response.data);
       setid(response.data.id);
+   
     } catch (error) {
       seterror(error.message);
     } finally {
