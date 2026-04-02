@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Navbar from "../component/Navbar";
 import Leaderboard from "./Leaderboard";
 import { usePage } from "../hooks/usePage";
@@ -7,37 +7,58 @@ import { usePage } from "../hooks/usePage";
 function GameDashboard() {
 
 
-    const { product, loading, error, handleMakeOffer, id } = usePage();
+    const { loading, error, handleMakeOffer, id, message, setmessage } = usePage();
 
     const [offer, setoffer] = useState("")
-    const [message, setmessage] = useState("")
-    console.log(id)
+    const [messageValue, setmessageValue] = useState("")
+    const messagesEndRef = useRef(null)
 
-
-    const messages = [
-        {
-            id: 1,
-            side: "left",
-            text: "You're looking at the APEX CHRONOS - listed at $4,200. This is a premium item. What's your opening offer?",
-        },
-    ];
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    }, [message.length, message.at(-1)?.text])
 
 
     const handleOffer = async (e) => {
         e.preventDefault()
-        let gameId = product.id
-        await handleMakeOffer(gameId, offer)
+        const gameId = id;
+
+        const userMsg = {
+            text: messageValue,
+            side: "right",
+            id: Date.now(),
+        };
+
+        // ✅ Show user message instantly
+        setmessage((prev) => [...prev, userMsg]);
+
+        setoffer("");
+        setmessageValue("");
+
+        await handleMakeOffer(gameId, offer, messageValue)
+        setoffer("")
+        setmessageValue("")
     }
+
+
+useEffect(()=>{
+
+},[])
 
     return (
         <main className="w-full min-h-screen bg-[#060916] p-2 text-slate-100 sm:px-4 sm:py-4">
             <Navbar />
-            <section className="w-full flex lg:flex-row flex-col p-4 justify-around">
+            <section className="w-full flex lg:flex-row flex-col p-4 justify-around ">
                 <div className="w-full lg:w-[60%] flex flex-col gap-4 ">
 
-                    <div className="h-[32rem] rounded-2xl border border-indigo-900/40 bg-[#0b0f22] p-3 shadow-[0_20px_80px_-45px_rgba(2,6,23,0.9)] sm:p-4">
+                    <div className="h-[32rem] rounded-2xl border border-indigo-900/40 bg-[#0b0f22] p-3 shadow-[0_20px_80px_-45px_rgba(2,6,23,0.9)] sm:p-4 overflow-auto">
                         <div className="space-y-3 sm:space-y-4">
-                            {messages.map((message) => {
+
+                           {message.length === 0  ?  <div className="mx-auto w-full rounded-lg border border-sky-700/45 bg-sky-900/20 px-3 py-3 text-center text-base font-medium text-sky-300 sm:max-w-[94%] sm:text-xl">
+                                <span className="text-yellow-400">Round 1 of 5 begins.</span>
+
+                            </div> :""}
+
+                            {message.map((message) => {
                                 const isLeft = message.side === "left";
 
                                 return (
@@ -67,12 +88,10 @@ function GameDashboard() {
                                         ) : null}
                                     </div>
                                 );
-                            })}
+                            })}                   
 
-                            <div className="mx-auto w-full rounded-lg border border-sky-700/45 bg-sky-900/20 px-3 py-3 text-center text-base font-medium text-sky-300 sm:max-w-[94%] sm:text-xl">
-                                <span className="text-yellow-400">Round 1 of 5 begins.</span>
+                            <div ref={messagesEndRef} />
 
-                            </div>
 
 
                         </div>
@@ -83,7 +102,7 @@ function GameDashboard() {
                     >
 
                         <div className="flex items-center gap-3 w-full lg:flex-row  md:flex-row flex-col ">
-                            //offer input field
+                            {/* offer input field */}
                             <input
                                 placeholder="Your Offer......."
                                 type="text"
@@ -92,10 +111,10 @@ function GameDashboard() {
                                 className="w-[20%] rounded-lg border border-indigo-700/55 bg-indigo-950/25 px-3 py-2 text-base font-semibold text-slate-100 placeholder:text-indigo-200/40 focus:outline-none sm:text-lg"
                             />
 
-                            //message input field
+                            {/* message input field */}
                             <input
-                                value={message}
-                                onChange={(e) => setmessage(e.target.value)}
+                                value={messageValue}
+                                onChange={(e) => setmessageValue(e.target.value)}
 
                                 type="text" placeholder="Write Your Message" className=" w-[80%] rounded-lg border border-indigo-700/55 bg-indigo-950/25 px-3 py-2 text-base font-semibold text-slate-100 placeholder:text-indigo-200/40 focus:outline-none sm:text-lg " />
                         </div>

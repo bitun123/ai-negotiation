@@ -14,25 +14,21 @@ export const usePage = () => {
     setmessage,
     id,
     setid,
+    gameinformation,
+    setgameinformation,
   } = useContext(PageContext);
 
   const createNewGame = async (selectedProduct, selectedDifficulty) => {
     try {
       setloading(true);
 
-
       seterror("");
-
-
+      setmessage([]);
+      setgameinformation(null);
       const response = await createGame(selectedProduct, selectedDifficulty);
-
-
- 
-
 
       setproduct(response.data);
       setid(response.data.id);
-   
     } catch (error) {
       seterror(error.message);
     } finally {
@@ -44,7 +40,23 @@ export const usePage = () => {
     try {
       setloading(true);
       const response = await makeOffer(gameId, offer, userMessage);
-      setmessage((prev) => [...prev, response.data]);
+      const { discount, finalPrice, status, currentRound } = response.data;
+
+      setgameinformation((prev) => ({
+        ...prev,
+        discount,
+        finalPrice,
+        status,
+        currentRound,
+      }));
+
+      const aiMsg = {
+        text: response.data.aiResponse,
+        side: "left",
+        id: Date.now() + 1,
+      };
+
+      setmessage((prev) => [...prev, aiMsg]);
     } catch (error) {
       seterror(error.message);
     } finally {
@@ -52,5 +64,20 @@ export const usePage = () => {
     }
   };
 
-  return { product, loading, error, createNewGame, handleMakeOffer  , id, setid ,message};
+
+  
+
+  return {
+    product,
+    loading,
+    error,
+    createNewGame,
+    handleMakeOffer,
+    id,
+    setid,
+    message,
+    setmessage,
+    gameinformation,
+    setgameinformation,
+  };
 };

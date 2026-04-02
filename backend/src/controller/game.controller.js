@@ -60,6 +60,8 @@ export const makeOfferController = async (req, res) => {
       success: true,
       message: "Offer processed successfully",
       data: {
+        you : userMessage,
+        offer: offer,
         aiResponse: lastRound.aiResponse,
         aiCounter: lastRound.aiCounter,
         status: game.status,

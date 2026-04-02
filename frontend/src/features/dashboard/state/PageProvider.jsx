@@ -8,10 +8,11 @@ const [error, seterror] = useState("")
 const [product, setproduct] = useState([])
 const [message, setmessage] = useState([])
 const [id, setid] = useState("")
+const [gameinformation, setgameinformation] = useState(null)
 
 
     return (
-        <PageContext.Provider value={{product, setproduct, loading, setloading, error, seterror, message, setmessage, id, setid}} >
+        <PageContext.Provider value={{product, setproduct, loading, setloading, error, seterror, message, setmessage, id, setid, gameinformation, setgameinformation}} >
             {children}
         </PageContext.Provider>
     )

@@ -3,7 +3,8 @@ import { usePage } from "../hooks/usePage";
 
 function Navbar() {
 
-  const { product } = usePage();
+  const { product ,gameinformation } = usePage();
+
 	return (
 		<header className="w-full border border-indigo-900/50 bg-[#0a0e21] px-4 py-4 shadow-[0_16px_40px_-28px_rgba(2,6,23,0.9)] sm:px-6 rounded">
 			<div className="mx-auto flex w-full max-w-7xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -23,7 +24,7 @@ function Navbar() {
 					</div>
 
 					<div className="rounded-md border border-yellow-500/60 bg-yellow-500/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-yellow-300 sm:text-sm">
-						Round <span>0/5</span>
+						Round <span>{gameinformation ? gameinformation.currentRound : "0"}/5</span>
 					</div>
 
 					
