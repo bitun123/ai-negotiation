@@ -118,7 +118,9 @@ export const createProcessOffer = ({
     round: currentRound,
     userOffer: normalizedOffer,
     aiResponse,
-    aiCounter
+    aiCounter,
+    userMessage : userMessage || "",
+    action,
   });
 
   await game.save();

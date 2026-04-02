@@ -5,6 +5,8 @@ const roundSchema = new mongoose.Schema({
   userOffer: Number,
   aiResponse: String,
   aiCounter: Number,
+  userMessage: String,
+  action: String,
 });
 
 const gameSchema = new mongoose.Schema(

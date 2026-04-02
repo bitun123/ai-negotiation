@@ -1,5 +1,10 @@
 import { useContext } from "react";
-import { createGame, makeOffer, getGameState, getActiveGame } from "../services/api";
+import {
+  createGame,
+  makeOffer,
+  getGameState,
+  getActiveGame,
+} from "../services/api";
 import { PageContext } from "../state/PageProvider";
 
 export const usePage = () => {
@@ -40,7 +45,8 @@ export const usePage = () => {
     try {
       setloading(true);
       const response = await makeOffer(gameId, offer, userMessage);
-      const { aiResponse, discount, finalPrice, status, currentRound } = response.data.data;
+      const { aiResponse, discount, finalPrice, status, currentRound } =
+        response.data;
 
       setgameinformation((prev) => ({
         ...prev,
@@ -107,38 +113,49 @@ export const usePage = () => {
       setloading(true);
       const response = await getActiveGame();
 
-      console.log(response)
-      const game = response.data;
+      const {
+        product,
+        initialPrice,
+        status,
+        discount,
+        finalPrice,
+        currentRound,
+        userMessage,
+        aiResponse,
+        aiCounter,
+        action,
+      } = response.data;
 
       setproduct({
-        id: game.gameId,
-        product: game.product,
-        initialPrice: game.initialPrice,
+        product: product,
+        initialPrice: initialPrice,
       });
-      setid(game.gameId);
+
+      setgameinformation((prev) => ({
+        ...prev,
+        status: status,
+        finalPrice: finalPrice,
+        currentRound: currentRound,
+      }));
+
       setmessage(
-        (game.rounds || []).flatMap((round) => [
-          {
-            id: `user-${game.gameId}-${round.round}`,
-            side: "right",
-            test : `Offer: ${round.you}`,
-          },
-          {
-            id: `ai-${game.gameId}-${round.round}`,
-            side: "left",
-            text: round.aiResponse,
-          },
-        ]),
+        aiResponse
+          ? [
+              {
+                text: userMessage,
+                side: "right",
+                id: Date.now(),
+              },
+              {
+                text: aiResponse,
+                side: "left",
+                id: Date.now() + 1,
+              },
+            ]
+          : []
       );
-      setgameinformation({
-        status: game.status,
-        finalPrice: game.finalPrice,
-        currentRound: game.rounds?.length || 0,
-      });
     } catch (error) {
-      if (error?.response?.status !== 404) {
-        seterror(error.message);
-      }
+      seterror(error.message);
     } finally {
       setloading(false);
     }

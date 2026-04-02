@@ -60,7 +60,7 @@ export const makeOfferController = async (req, res) => {
       success: true,
       message: "Offer processed successfully",
       data: {
-        you : userMessage,
+        you: userMessage,
         offer: offer,
         aiResponse: lastRound.aiResponse,
         aiCounter: lastRound.aiCounter,
@@ -114,17 +114,21 @@ export const getActiveGameController = async (req, res) => {
       return res.status(404).json({ error: "No active game found" });
     }
 
+    console.log(game);
+
     res.status(200).json({
       success: true,
       data: {
-        gameId: game._id,
         product: game.product,
         initialPrice: game.initialPrice,
         status: game.status,
-        rounds: game.rounds,
+        discount: game.discount !== undefined ? game.discount + "%" : "0%",
         finalPrice: game.finalPrice,
-        difficulty: game.difficulty,
-        aiPersonality: game.aiPersonality,
+        userMessage: game.rounds.at(-1)?.userMessage || "",
+        aiResponse: game.rounds.at(-1)?.aiResponse || "",
+        aiCounter: game.rounds.at(-1)?.aiCounter || null,
+        action: game.rounds.at(-1)?.action || null,
+        currentRound: game.rounds.length,
       },
     });
   } catch (error) {
@@ -136,13 +140,12 @@ export const getLeaderboardController = async (req, res) => {
   try {
     const topGames = await gameModel
       .find({ status: "completed" })
-      .sort({ discount: -1, roundsUsed: 1 }) 
+      .sort({ discount: -1, roundsUsed: 1 })
       .limit(10)
-      .select("product initialPrice finalPrice discount roundsUsed rounds userId ")
+      .select(
+        "product initialPrice finalPrice discount roundsUsed rounds userId ",
+      )
       .populate("userId");
-
-
-   
 
     res.status(200).json({
       success: true,

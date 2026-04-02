@@ -89,9 +89,6 @@ function GameDashboard() {
                             })}
 
                             <div ref={messagesEndRef} />
-
-
-
                         </div>
                     </div>
 
