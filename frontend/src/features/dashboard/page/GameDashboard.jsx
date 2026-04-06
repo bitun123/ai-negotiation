@@ -3,16 +3,21 @@ import Navbar from "../component/Navbar";
 import Leaderboard from "./Leaderboard";
 import { usePage } from "../hooks/usePage";
 import ReactMarkdown from "react-markdown";
+import { useNavigate } from "react-router-dom";
 
 
 function GameDashboard() {
 
 
-    const { loading, error, handleMakeOffer, id, message, setmessage, hydrateActiveGame } = usePage();
+    const { loading, error, handleMakeOffer, id, message, setmessage, hydrateActiveGame, gameinformation } = usePage();
+
+
+
 
     const [offer, setoffer] = useState("")
     const [messageValue, setmessageValue] = useState("")
     const messagesEndRef = useRef(null)
+    const navigate = useNavigate()
 
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -42,6 +47,12 @@ function GameDashboard() {
     useEffect(() => {
         hydrateActiveGame()
     }, [])
+
+if(gameinformation?.status === "completed"){
+   return (
+     alert("Game Completed! Redirecting to results page..." ,navigate("/"))
+   )
+}
 
     return (
         <main className="w-full min-h-screen bg-[#060916] p-2 text-slate-100 sm:px-4 sm:py-4">
@@ -87,8 +98,8 @@ function GameDashboard() {
                                                         ul: ({ node, ...props }) => <ul className="list-disc list-inside mb-2 space-y-1" {...props} />,
                                                         ol: ({ node, ...props }) => <ol className="list-decimal list-inside mb-2 space-y-1" {...props} />,
                                                         li: ({ node, ...props }) => <li className="text-slate-100" {...props} />,
-                                                        code: ({ node, inline, ...props }) => 
-                                                            inline ? 
+                                                        code: ({ node, inline, ...props }) =>
+                                                            inline ?
                                                                 <code className="bg-indigo-900/40 px-1.5 py-0.5 rounded text-yellow-200 font-mono text-sm" {...props} /> :
                                                                 <code className="block bg-indigo-900/60 p-2 rounded my-2 text-yellow-100 font-mono text-sm overflow-auto" {...props} />,
                                                         blockquote: ({ node, ...props }) => <blockquote className="border-l-4 border-indigo-600 pl-3 italic text-indigo-300 my-2" {...props} />,

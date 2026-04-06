@@ -11,7 +11,7 @@ const [id, setid] = useState("")
 const [gameinformation, setgameinformation] = useState(null)
 const [leaderBoard, setleaderBoard] = useState([])
 
-
+console.log("message in provider", message)
     return (
         <PageContext.Provider value={{product, setproduct, loading, setloading, error, seterror, message, setmessage, id, setid, gameinformation, setgameinformation, leaderBoard, setleaderBoard   }} >
             {children}

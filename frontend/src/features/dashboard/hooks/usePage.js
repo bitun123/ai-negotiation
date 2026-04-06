@@ -192,6 +192,9 @@ export const usePage = () => {
     }
   };
 
+
+
+
   return {
     product,
     loading,

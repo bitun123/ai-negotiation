@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import { usePage } from "../hooks/usePage"
 import { useNavigate } from 'react-router-dom';
+import Loader from '../../common/Loader';
 
 function PopupProduct() {
     const [selectedDifficulty, setSelectedDifficulty] = useState(null)
@@ -166,7 +167,7 @@ function PopupProduct() {
                     <button
                         onClick={handleStartGame}
                         className='px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 transition'>
-                        {loading ? "Starting..." : "Start Negotiation"}
+                        {loading ? <Loader/> : "Start Negotiation"}
                     </button>
                 </div>
             </div>

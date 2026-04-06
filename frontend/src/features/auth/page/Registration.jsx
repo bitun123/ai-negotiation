@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import Loader from '../../common/Loader';
 
 export default function Registration() {
     const [userName, setUserName] = useState('');
@@ -8,11 +9,13 @@ export default function Registration() {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const { handleRegister, loading } = useAuth()
+    const navigate = useNavigate()
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         await handleRegister(userName, email, password);
+        navigate("/login")
     };
 
     return (
@@ -123,7 +126,7 @@ export default function Registration() {
                             className="w-full bg-gradient-to-r from-cyan-400 cursor-pointer to-cyan-500 hover:from-cyan-500 hover:to-cyan-600 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2"
                         >
                             {
-                                loading ? "Creating Account..." : "Sign Up"
+                                loading ? <Loader /> : "Sign Up"
                             }
                         </button>
                     </form>
